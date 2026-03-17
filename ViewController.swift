@@ -14,65 +14,52 @@ class ViewController: UIViewController {
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
+    func getWeatherImage(matching weather: String) -> UIImage?{
+        switch weather {
+        case "Sunny":
+            return UIImage(named:"sunny")
+        case "Rainy":
+            return UIImage(named:"rainy")
+        case "Snowy":
+            return UIImage(named:"snowy")
+        case "Cloudy":
+            return UIImage(named:"cloudy")
+        default:
+            return UIImage(named:"weather")
+        }    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let weather = "Rainy"
-        let temp = 27
-        //        if weather == "Sunny" {
-        //            weatherImage.image = UIImage(named:"sunny")
-        //        }else if weather == "Rainy" {
-        //            weatherImage.image = UIImage(named:"rainy")
-        //        }else if weather == "Snowy" {
-        //            weatherImage.image = UIImage(named:"snowy")
-        //        }else if weather == "Cloudy" {
-        //            weatherImage.image = UIImage(named:"cloudy")
-        //        }else {
-        //            weatherImage.image = UIImage(named:"weather")
-        //        }
+        let weather = ["Sunny", "Cloudy", "Rainy", "Snowy"].randomElement() ?? "Sunny"
+//        guard let weather else{
+//            return
+//        }
+        let temp = Int.random(in: 0 ... 100)
         
-        switch weather {
-        case "Sunny":
-            weatherImage.image = UIImage(named:"sunny")
-        case "Rainy":
-            weatherImage.image = UIImage(named:"rainy")
-        case "Snowy":
-            weatherImage.image = UIImage(named:"snowy")
-        case "Cloudy":
-            weatherImage.image = UIImage(named:"cloudy")
-        default:
-            weatherImage.image = UIImage(named:"weather")
-        }
+        weatherImage.image = getWeatherImage(matching: weather)
         
         statusLabel.text = weather
         tempLabel.text = "\(temp)℉"
         
-
-//        if temp < 20 {
-//            descriptionLabel.text = "Extreme cold"
-//        }else if temp >= 20 && temp <= 49 {
-//            descriptionLabel.text = "It's cold outside!"
-//        }else if temp >= 50 && temp <= 68 {
-//            descriptionLabel.text = "Cool and mild!"
-//        }else if (69...85).contains(temp){
-//            descriptionLabel.text = "Warm!"
-//        }else{
-//            descriptionLabel.text = "Heat alert!"
-//        }
-//
-        
-        switch temp {
-        case ..<20:
-            descriptionLabel.text = "Extreme cold"
-        case 20..<50:
-            descriptionLabel.text = "It's cold outside!"
-        case 50..<70:
-            descriptionLabel.text = "Cool and mild!"
-        case 70..<90:
-            descriptionLabel.text = "Warm!"
-        default:
-            descriptionLabel.text = "Heat alert!"
+        func getTempDescription(matching temp: Int) -> String?{
+            switch temp {
+            case ..<20:
+                return "Extreme cold"
+            case 20..<50:
+                return "It's cold outside!"
+            case 50..<70:
+                return "Cool and mild!"
+            case 70..<90:
+                return "Warm!"
+            default:
+                return "Heat alert!"
+            }
         }
+        
+        descriptionLabel.text = getTempDescription(matching: temp)
+        
+
         
     }
 
